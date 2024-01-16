@@ -4,7 +4,7 @@ import { hcl } from "d3-color";
 
 const colorScheme = [
   "#a6cee3",
-  "#3366cc",
+  "#00a86b",
   "#b2df8a",
   "#33a02c",
   "#fb9a99",
@@ -17,6 +17,11 @@ const colorScheme = [
   "#b15928",
   "#ffcc99",
   "#333399"
+];
+const accessColorScheme = [
+  "#3366cc",
+  "#ff4d00",
+  "#d22b2b"
 ];
 
 const extendColorScheme = (colorScheme, count) => {
@@ -57,4 +62,4 @@ const extendColorScheme = (colorScheme, count) => {
   return concat(colorScheme, extraColors)
 }
 
-export { colorScheme, extendColorScheme };
+export { colorScheme, accessColorScheme, extendColorScheme };

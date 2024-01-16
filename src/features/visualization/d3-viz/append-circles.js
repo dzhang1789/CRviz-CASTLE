@@ -42,7 +42,7 @@ const appendCircles = ({ nodeRoot, labelRoot, packedData, showNodes, hasSearch, 
   const circles = nodes.select("circle").merge(nodesEnter.append("circle"));
 
   circles.attr("r", (d) => d.r);
-
+  
   const newLabelGroups = nodesEnter.append("g").classed(className('label-group'), true);
   const newLabelShapes = newLabelGroups.append("path");
   const newLabels = newLabelGroups.append('text').classed(className('label'), true);

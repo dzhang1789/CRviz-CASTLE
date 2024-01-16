@@ -16,7 +16,8 @@ import {
 } from "ramda";
 
 import className from "./class-name";
-import { colorScheme, extendColorScheme } from './color-scheme';
+import { colorScheme, accessColorScheme, extendColorScheme } from './color-scheme';
+import { get } from 'enzyme/build/configuration';
 
 function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig }) {
   if (!coloredField) {
@@ -49,8 +50,13 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
     sortBy(identity)
   )(data);
 
-  const scheme = extendColorScheme(colorScheme, values.length);
-
+  var scheme = [];
+  if (coloredField.path == 'Access'){
+    scheme = accessColorScheme
+  } else {
+    scheme = extendColorScheme(colorScheme, values.length);
+  }
+  
   const configs = scheme.map((color, index) => {
     return {
       color,
@@ -58,10 +64,10 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
       className: `legend-color-${index}`
     }
   });
-
+  
   const coloring = zip(values, configs);
   const colorMap = fromPairs(coloring);
-
+  
   createStylesheet(coloring);
 
   const state = { nodes: [] }

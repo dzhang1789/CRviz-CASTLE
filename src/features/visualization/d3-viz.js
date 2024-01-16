@@ -23,6 +23,7 @@ import setupTooltip from "./d3-viz/setup-tooltip";
 import setupLegend from "./d3-viz/setup-legend";
 import setupAnnotations from "./d3-viz/setup-annotations";
 import datumKey from "./d3-viz/datum-key";
+import {appendLabels} from "./d3-viz/label-nodes";
 
 function d3Viz(rootNode) {
   const root = select(rootNode);
@@ -179,6 +180,11 @@ function d3Viz(rootNode) {
       resetNodeStyles: props.resetNodeStyles,
     });
 
+    const labels = appendLabels({
+      nodes: nodes,
+      labeledField: props.data,
+    });
+
     setupTooltip({
       tooltip: tooltip,
       fields: props.fields,
@@ -186,6 +192,7 @@ function d3Viz(rootNode) {
     });
 
     state.nodes = nodes;
+    state.labels = labels;
   };
 
   const resetLegend = (props, state) => {
@@ -200,7 +207,7 @@ function d3Viz(rootNode) {
       state.legend.update({ nodes: state.nodes, annotations: state.annotations })
     }
   };
-
+  
   const resetZoom = (props, state) => {
     state.zoom = setupZoom({
       zoomRoot: zoomRoot,
