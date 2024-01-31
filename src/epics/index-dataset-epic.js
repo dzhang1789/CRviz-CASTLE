@@ -40,10 +40,11 @@ const indexDatasetEpic = (action$, store) => {
 const searchReducer = (state = { searchIndices: {}, queryString: '', searchResults: null }, action) => {
   switch (action.type) {
     case BUILD_INDICES_SUCCESS:
+      const updatedSearchIndicies = { ...state.searchIndices };
       action.payload.forEach((item) => {
-        state.searchIndices[item.owner] = item.index;
+        updatedSearchIndicies[item.owner] = item.index;
       })
-      return {...state };
+      return {...state, searchIndices: updatedSearchIndicies };
     case 
     SET_SEARCH_RESULTS:
       const searchResults = action.payload.results;
@@ -51,11 +52,13 @@ const searchReducer = (state = { searchIndices: {}, queryString: '', searchResul
       return { ...state, searchResults, queryString};
     case 
     REMOVE_SEARCH_INDEX:
-      const rsowner = action.payload.owner;
-      if(state.searchIndices.hasOwnProperty(rsowner))
-        delete state.searchIndices[rsowner];
+      const { owner } = action.payload;
+      if(state.searchIndices.hasOwnProperty(owner)) {
+        const { [owner]: removedIndex, ...updatedIndicies } = state.searchIndices
+        return { ...state, searchIndices: updatedIndicies };
+      }
 
-      return { ...state }
+      return state
     default:
       return state;
   }

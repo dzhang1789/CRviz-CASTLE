@@ -14,7 +14,7 @@ import { setNotes } from "domain/notes";
 
 const updateDatasetEpic = (action$, store) => {
   return action$.pipe(
-    tap(action => console.log(action)),
+    tap(action => console.log("Dispatch recieved:", action.type)),
     ofType(setCurrentTimestep.toString())
     ,concatMap( ({ payload }) => {
       try{

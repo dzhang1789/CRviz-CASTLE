@@ -6,7 +6,6 @@ import selectorStyle from "./TimestepSelector.module.css"
 const TimestepSelector = ( {currentTimestep, setCurrentTimestep }) => {
     const handleChangeTimestep = (newTimestep) => {
         setCurrentTimestep(newTimestep);
-        console.log('Hi')
     };
 
     return(
@@ -23,18 +22,14 @@ const TimestepSelector = ( {currentTimestep, setCurrentTimestep }) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.dataset)
     return {
         currentTimestep: state.controls.currentTimestep,
-
     };
 };
 
 const mapDispatchToProps = {
     setCurrentTimestep,
 };
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimestepSelector);
 // const defaultState = {

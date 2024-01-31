@@ -219,14 +219,13 @@ const reducer = handleActions(
   {
     [setDatasets]: (state, { payload }) => {
       const datasets = payload.datasets;
-      console.log(datasets)
+      const newState = { ...state, datasets: { ...state.datasets } };
       Object.keys(datasets).forEach((key) => {
-        state.datasets[key] = datasets[key];
+        newState.datasets[key] = datasets[key];
       })
       
-      return { ...state};
+      return newState;
     },
-
     [setCurrentTimestep]: (state, {payload}) => {
       console.log((payload, "event has occurred"));
       return{
@@ -235,10 +234,8 @@ const reducer = handleActions(
       }
      
     },
-
     [setDataset]: (state, { payload }) => {
       const dataset = payload.dataset;
-      console.log(payload)
       const owner = payload.owner;
       const source = payload.source;
       const name = payload.name;
@@ -246,15 +243,16 @@ const reducer = handleActions(
       const initialConfig = payload.configuration;
       const keyFields = getKeyFields(state);
       const ignoredFields = getIgnoredFields(state);
-      state.datasets[owner] = configureDataset(dataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
-      return { ...state};
+
+      const updatedDataset = configureDataset(dataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
+      return { ...state, datasets: { ...state.datasets, [owner]: updatedDataset} };
     },
     [setFilteredDataset]: (state, { payload }) => {
       const filtered = payload.filtered;
       const owner = payload.owner;
 
-      state.datasets[owner].filtered = filtered;
-      return { ...state};
+      const updatedDataset = { ...state.datasets[owner], filtered };
+      return { ...state, datasets: { ...state.datasets, [owner]: updatedDataset } };
     },
     [setDatasetDiff]: (state, { payload }) => {
       const start = payload.start;
@@ -267,45 +265,49 @@ const reducer = handleActions(
       }
 
       const idx = state.diffs.findIndex(d => d.start === start && d.end === end);
+      const updatedDiffs = idx === -1 ? [...state.diffs, newDiff] : state.diffs.map((d, i) => (i === idx ? newDiff : d));
 
-      if(idx === -1){
-        state.diffs.push(newDiff);
-      } else {
-        state.diffs[idx] = newDiff;
-      }
-      return { ...state};
+      return { ...state, diffs: updatedDiffs };
     },
     [removeDataset]: (state, { payload }) => {
       const owner = payload.owner;
-      if(state.datasets.hasOwnProperty(owner))
-        delete state.datasets[owner];
+      const { [owner]: removedDataset, ...remainingDatasets } = state.datasets;
 
-      return { ...state }
+      return { ...state, datasets: remainingDatasets }
     },
     [removeFilteredDataset]: (state, { payload }) => {
       const owner = payload.owner;
-      if(state.datasets.hasOwnProperty(owner))
-        state.datasets[owner].filtered = null;
-
-      return { ...state }
+      const updatedDataset = { ...state.datasets[owner], filtered: null };
+     
+      return { ...state, datasets: { ...state.datasets, [owner]: updatedDataset } }
     },
     [removeDatasetDiff]: (state, { payload }) => {
       const start = payload.start;
       const end = payload.end;
-      const idx = state.diffs.findIndex(d => d.start === start && d.end === end);
+
+      const newDiffs = [...state.diffs];
+      const idx = newDiffs.findIndex(d => d.start === start && d.end === end);
 
       if(idx !== -1){
-        state.diffs.splice(idx, 1);
+        newDiffs.splice(idx, 1);
       }
 
-      return { ...state }
+      return { ...state, diffs: newDiffs }
     },
     [setIsFetching]: (state, { payload }) => {
       const owner = payload.owner;
       const isFetching = !!payload.isFetching;
-      if(state.datasets.hasOwnProperty(owner))
-        state.datasets[owner].isFetching = isFetching;
-      return { ...state, isFetching};
+      
+      return {
+        ...state,
+        datasets: {
+          ...state.datasets,
+          [owner]: {
+            ...(state.datasets[owner] || {}),
+            isFetching
+          }
+        }
+      }
     },
     [setKeyFields]: (state, { payload }) => { 
       const keyFields = payload ? payload : state.keyFields;
@@ -313,29 +315,41 @@ const reducer = handleActions(
       if(datasets){
         Object.keys(datasets).forEach((key) => {
           const ds = datasets[key];
-          ds.configuration.keyFields = keyFields;
-          const { keyCount, uniqueKeyCount } = applyHashes(ds.dataset, ds.configuration);
-          ds.keyCount = keyCount;
-          ds.uniqueKeyCount = uniqueKeyCount;
+          const configuration = { ... ds.configuration };
+          configuration.keyFields = keyFields;
+
+          const { keyCount, uniqueKeyCount } = applyHashes(ds.dataset, configuration);
+          
+          datasets[key] = {
+            ...ds, 
+            configuration,
+            keyCount,
+            uniqueKeyCount
+          }
         });
       }
 
-      return {...state, keyFields: keyFields };
+      return {...state, keyFields };
     },
     [setIgnoredFields]: (state, { payload }) => {
       const ignoredFields = payload ? payload : state.ignoredFields;
-      const datasets = _selectDatasets(state);
+      const datasets = { ..._selectDatasets(state) };
 
       if(datasets && ignoredFields){
         const allFields = _selectMergedConfiguration(state).fields;
         const hashFields = getHashFields(allFields, ignoredFields);
 
         Object.keys(datasets).forEach((key) => {
-          const ds = datasets[key];    
-          ds.configuration.hashFields = hashFields
-          const { keyCount, uniqueKeyCount } = applyHashes(ds.dataset, ds.configuration);
-          ds.keyCount = keyCount;
-          ds.uniqueKeyCount = uniqueKeyCount;
+          const ds = datasets[key]; 
+          const configuration = { ...ds.configuration };   
+          configuration.hashFields = hashFields
+          const { keyCount, uniqueKeyCount } = applyHashes(ds.dataset, configuration);
+          datasets[key] = {
+            ...ds, 
+            configuration,
+            keyCount,
+            uniqueKeyCount
+          }
         });
       }
 

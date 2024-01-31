@@ -110,7 +110,6 @@ const CSVconvert = (data) => {
 const formatPayload = async (data, store) => {
   const view = true;
   const currentTimestep = store.value.dataset.currentTimestep.currentTimestep;
-  console.log(data)
   const owner = data.owner;
   const initialName = data.name;
   const initialShortName = data.shortName;
