@@ -6,6 +6,7 @@ import selectorStyle from "./TimestepSelector.module.css"
 const TimestepSelector = ( {currentTimestep, setCurrentTimestep }) => {
     const handleChangeTimestep = (newTimestep) => {
         setCurrentTimestep(newTimestep);
+        console.log('Hi')
     };
 
     return(
