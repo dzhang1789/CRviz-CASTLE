@@ -17,7 +17,6 @@ import {
 
 import className from "./class-name";
 import { colorScheme, accessColorScheme, extendColorScheme } from './color-scheme';
-import { get } from 'enzyme/build/configuration';
 
 function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig }) {
   if (!coloredField) {

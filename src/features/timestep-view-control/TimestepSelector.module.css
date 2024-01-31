@@ -1,0 +1,22 @@
+.timestepPanel {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.inputStyle {
+    margin-right: 10px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.applyButton {
+    padding: 8px 15px;
+    font-size: 14px;
+    background-color: #DCDCDC;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

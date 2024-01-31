@@ -21,7 +21,9 @@ const defaultState = {
   datasets: {},
   diffs:[],
   keyFields: [],
-  ignoredFields: []
+  ignoredFields: [],
+  currentTimestep: {currentTimestep: "0"},
+  view: true
 };
 const defaultItemState = {
   owner: "",
@@ -210,20 +212,33 @@ const removeDatasetDiff = createAction("REMOVE_DATASET_DIFF");
 const setIsFetching = createAction("SET_IS_FETCHING");
 const setKeyFields = createAction("SET_KEY_FIELDS");
 const setIgnoredFields = createAction("SET_IGNORED_FIELDS");
+const setCurrentTimestep = createAction("SET_CURRENT_TIMESTEP");
 
 // REDUCERS
 const reducer = handleActions(
   {
     [setDatasets]: (state, { payload }) => {
       const datasets = payload.datasets;
+      console.log(datasets)
       Object.keys(datasets).forEach((key) => {
         state.datasets[key] = datasets[key];
       })
       
       return { ...state};
     },
+
+    [setCurrentTimestep]: (state, {payload}) => {
+      console.log((payload, "event has occurred"));
+      return{
+        ...state,
+        currentTimestep: payload,
+      }
+     
+    },
+
     [setDataset]: (state, { payload }) => {
       const dataset = payload.dataset;
+      console.log(payload)
       const owner = payload.owner;
       const source = payload.source;
       const name = payload.name;
@@ -395,6 +410,7 @@ const getIsFetching = (state, owner) => state.dataset.datasets[owner] && state.d
 const getLastUpdated = (state, owner) => state.dataset.datasets[owner] && state.dataset.datasets[owner].lastUpdated ? state.dataset.datasets[owner].lastUpdated : defaultItemState.lastUpdated;
 const getKeyFields = (state) => state.dataset && state.dataset.keyFields ? state.dataset.keyFields : [];
 const getIgnoredFields = (state) => state.dataset && state.dataset.ignoredFields ? state.dataset.ignoredFields : [];
+const getCurrentTimestep = (state) => state.dataset.currentTimestep;
 
 // const memoizeKey = (state, startOwner, endOwner) => {
 //   const startUpdated = state.dataset && state.dataset.datasets[startOwner] ? state.dataset.datasets[startOwner].lastUpdated : "NotUpdated";
@@ -457,5 +473,5 @@ const selectDatasetIntersection = (state, startOwner, endOwner) => {
 export default reducer;
 
 export { setDatasets, setDataset, selectDataset, selectDatasets, removeDataset, setFilteredDataset, selectFilteredDataset, removeFilteredDataset, selectConfiguration, selectMergedConfiguration,
-  selectValues, selectMergedValues, getFieldId, configurationFor, setIsFetching, getIsFetching, setKeyFields, getKeyFields, setIgnoredFields, getIgnoredFields, getHashFields, getLastUpdated, 
-  valuesFor, setDatasetDiff, removeDatasetDiff, selectDatasetDiff, selectDatasetIntersection, applyHashes, configureDataset };
+  selectValues, selectMergedValues, getFieldId, configurationFor, setIsFetching, getIsFetching, setKeyFields, getKeyFields, setIgnoredFields, getIgnoredFields, setCurrentTimestep, getCurrentTimestep,
+  getHashFields, getLastUpdated, valuesFor, setDatasetDiff, removeDatasetDiff, selectDatasetDiff, selectDatasetIntersection, applyHashes, configureDataset };

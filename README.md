@@ -104,3 +104,11 @@ Here are some quick commands to get started:
 - `src/epics` contains [redux-observable](https://github.com/redux-observable/redux-observable)
 
 - `src/features` contains React components organized by features.
+
+### CASTLE
+
+- When using this library, make sure Node is running on vv16.0.0 or earlier
+- To make commits to the repo, remove the pre-commit file in git:
+  - `cd .git`
+  - `cd hooks`
+  - `rm pre-commit`

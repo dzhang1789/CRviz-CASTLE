@@ -7,6 +7,7 @@ import indexDatasetEpic from './index-dataset-epic';
 import refreshDatasetEpic from './refresh-dataset-epic';
 import filterDatasetEpic from './filter-dataset-epic';
 import diffDatasetEpic from './diff-dataset-epic';
+import updateDatasetEpic from './update-dataset-epic';
 
 const rootEpic = combineEpics(
   loadDatasetEpic,
@@ -16,7 +17,8 @@ const rootEpic = combineEpics(
   indexDatasetEpic,
   refreshDatasetEpic,
   filterDatasetEpic,
-  diffDatasetEpic
+  diffDatasetEpic,
+  updateDatasetEpic
 );
 
 export default rootEpic;
