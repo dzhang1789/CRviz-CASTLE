@@ -10,14 +10,14 @@ const TimestepSelector = ( {currentTimestep, setCurrentTimestep }) => {
 
     return(
         <div className={selectorStyle.timestepPanel}>
-                <input
-                    type="number"
-                    className={selectorStyle.inputStyle}
-                    placeholder="Enter Timestep"
-                    value={currentTimestep}
-                    onChange={(e) => handleChangeTimestep(e.target.value)}
-                />
-            </div>
+            <input
+                type="number"
+                className={selectorStyle.inputStyle}
+                placeholder="Enter Timestep"
+                value={currentTimestep}
+                onChange={(e) => handleChangeTimestep(e.target.value)}
+            />
+        </div>
     )
 }
 

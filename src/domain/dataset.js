@@ -14,10 +14,12 @@ import {
   sortBy,
   toPairs,
   uniq,
+  update,
   //memoizeWith,
 } from "ramda";
 
 const defaultState = {
+  data: {},
   datasets: {},
   diffs:[],
   keyFields: [],
@@ -202,8 +204,11 @@ const configureDataset = (dataset, source, name, shortName, initialConfig, keyFi
  *   configuration: {} // Configuration
  * }
 */
+
+const setData = createAction("SET_DATA");
 const setDatasets = createAction("SET_DATASETS");
 const setDataset = createAction("SET_DATASET");
+const updateDataset = createAction("UPDATE_DATASET");
 const setFilteredDataset = createAction("SET_FILTERED_DATASET");
 const setDatasetDiff = createAction("SET_DATASET_DIFF");
 const removeDataset = createAction("REMOVE_DATASET");
@@ -217,6 +222,15 @@ const setCurrentTimestep = createAction("SET_CURRENT_TIMESTEP");
 // REDUCERS
 const reducer = handleActions(
   {
+    [setData]: (state, { payload }) => {
+      const data = payload.data;
+      const newState = { ...state, data: { ...state.data } };
+      Object.keys(data).forEach((key) => {
+        newState.data[key] = data[key];
+      })
+
+      return newState
+    },
     [setDatasets]: (state, { payload }) => {
       const datasets = payload.datasets;
       const newState = { ...state, datasets: { ...state.datasets } };
@@ -227,7 +241,6 @@ const reducer = handleActions(
       return newState;
     },
     [setCurrentTimestep]: (state, {payload}) => {
-      console.log((payload, "event has occurred"));
       return{
         ...state,
         currentTimestep: payload,
@@ -245,6 +258,24 @@ const reducer = handleActions(
       const ignoredFields = getIgnoredFields(state);
 
       const updatedDataset = configureDataset(dataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
+      return { ...state, datasets: { ...state.datasets, [owner]: updatedDataset} };
+    },
+    [updateDataset]: (state, { payload }) => {
+      console.log("hi")
+      const dataset = state.dataset;
+      const data = dataset.data;
+      const content = data.content;
+      const newDataset = content[payload];
+      console.log(newDataset)
+      const owner = state.owner;
+      const source = state.source;
+      const name = state.name;
+      const shortName = state.shortName;
+      const initialConfig = state.configuration;
+      const keyFields = getKeyFields(state);
+      const ignoredFields = getIgnoredFields(state);
+
+      const updatedDataset = configureDataset(newDataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
       return { ...state, datasets: { ...state.datasets, [owner]: updatedDataset} };
     },
     [setFilteredDataset]: (state, { payload }) => {
@@ -297,17 +328,15 @@ const reducer = handleActions(
     [setIsFetching]: (state, { payload }) => {
       const owner = payload.owner;
       const isFetching = !!payload.isFetching;
-      
-      return {
-        ...state,
-        datasets: {
-          ...state.datasets,
-          [owner]: {
-            ...(state.datasets[owner] || {}),
-            isFetching
-          }
+
+      const datasets = { ...state.datasets };
+      if(datasets.hasOwnProperty(owner)) {
+        datasets[owner] = {
+          ...datasets[owner],
+          isFetching: isFetching,
         }
       }
+      return { ...state, datasets};
     },
     [setKeyFields]: (state, { payload }) => { 
       const keyFields = payload ? payload : state.keyFields;
@@ -486,6 +515,6 @@ const selectDatasetIntersection = (state, startOwner, endOwner) => {
 
 export default reducer;
 
-export { setDatasets, setDataset, selectDataset, selectDatasets, removeDataset, setFilteredDataset, selectFilteredDataset, removeFilteredDataset, selectConfiguration, selectMergedConfiguration,
+export { setData, setDatasets, setDataset, updateDataset, selectDataset, selectDatasets, removeDataset, setFilteredDataset, selectFilteredDataset, removeFilteredDataset, selectConfiguration, selectMergedConfiguration,
   selectValues, selectMergedValues, getFieldId, configurationFor, setIsFetching, getIsFetching, setKeyFields, getKeyFields, setIgnoredFields, getIgnoredFields, setCurrentTimestep, getCurrentTimestep,
   getHashFields, getLastUpdated, valuesFor, setDatasetDiff, removeDatasetDiff, selectDatasetDiff, selectDatasetIntersection, applyHashes, configureDataset };

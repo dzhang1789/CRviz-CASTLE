@@ -99,7 +99,6 @@ class DatasetControls extends React.Component {
   }
 
   fetchAndSetDataset = (url, dataset, username, password, token) => {
-    this.props.showBusy(true);
     this.props.setIsFetching({owner: this.props.uuid, isFetching: true});
     const authHeader = buildAuthHeader(username, password, token);
     if (toURL(url)) {

@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { 
-  selectDatasets, getLastUpdated, removeDataset,getKeyFields, getIgnoredFields, setCurrentTimestep
+  selectDatasets, getLastUpdated, removeDataset,getKeyFields, getIgnoredFields, 
 } from 'domain/dataset';
 import { 
   setHierarchyConfig, showNodes, colorBy, selectControls, setStartDataset, setEndDataset,
@@ -100,17 +100,12 @@ class App extends Component {
         controls: true,
         notes: true,
       },
-      currentTimestep: 0,
       selectedFile: null,
       exportName: "dataset.json",
       initialDataSource: ds_uri ? initial_data_source : null,
       resetNodeStyles: false,
     };
   }
-
-  handleTimestepSelect = (currentTimestep) => {
-    this.setState({ currentTimestep });
-  };
 
   static getDerivedStateFromProps = (nextProps, prevState) =>{
     const datasetAdded = prevState.datasetAdded && (nextProps.uuids.length !== prevState.uuids.length)
@@ -577,7 +572,6 @@ class App extends Component {
           <div>
             <TimestepSelector />
           </div>
-  
       </div>
     );
   }

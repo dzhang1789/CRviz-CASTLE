@@ -20,7 +20,7 @@ const configureStore = (initialState = {}) => {
   const store = createStore(rootReducer,
     initialState,
     composeEnhancers(
-      applyMiddleware(logMiddle, middleware)
+      applyMiddleware(logMiddle, middleware )
     )
   );
 

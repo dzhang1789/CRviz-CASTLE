@@ -8,7 +8,7 @@ import { resolveRefs } from 'json-refs';
 import { buildIndices } from './index-dataset-epic';
 
 import { setError } from "domain/error"
-import { setDatasets, setKeyFields, setIgnoredFields, configureDataset, setCurrentTimestep } from "domain/dataset";
+import { setData ,setDatasets, setKeyFields, setIgnoredFields, configureDataset, setCurrentTimestep } from "domain/dataset";
 import { setControls, showBusy } from "domain/controls";
 import { setNotes } from "domain/notes";
 
@@ -42,7 +42,8 @@ const loadDatasetEpic = (action$, store) => {
 
     
       return of(
-        setDatasets(formattedPayload)
+        setData(formattedPayload)
+        ,setDatasets(formattedPayload)
         ,setKeyFields(keyFields)
         ,setIgnoredFields(ignoredFields)
         ,setControls(controls)
@@ -157,7 +158,6 @@ const formatPayload = async (data, store) => {
           'currentTimestep' : currentTimestep,
           'view' : view
         };
-  console.log(data)
   return data;
 };
 
