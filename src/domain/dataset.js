@@ -218,6 +218,7 @@ const setIsFetching = createAction("SET_IS_FETCHING");
 const setKeyFields = createAction("SET_KEY_FIELDS");
 const setIgnoredFields = createAction("SET_IGNORED_FIELDS");
 const setCurrentTimestep = createAction("SET_CURRENT_TIMESTEP");
+const updateView = createAction("UPDATE_VIEW");
 
 // REDUCERS
 const reducer = handleActions(
@@ -248,6 +249,7 @@ const reducer = handleActions(
      
     },
     [setDataset]: (state, { payload }) => {
+      console.log(state)
       const dataset = payload.dataset;
       const owner = payload.owner;
       const source = payload.source;
@@ -261,22 +263,47 @@ const reducer = handleActions(
       return { ...state, datasets: { ...state.datasets, [owner]: updatedDataset} };
     },
     [updateDataset]: (state, { payload }) => {
-      console.log("hi")
-      const dataset = state.dataset;
-      const data = dataset.data;
+      const data = state.data;
       const content = data.content;
-      const newDataset = content[payload];
-      console.log(newDataset)
-      const owner = state.owner;
+      const view = state.view;
+      const newDataset = view ? content[payload].red : content[payload].true;
+      const datasets = state.datasets
       const source = state.source;
       const name = state.name;
       const shortName = state.shortName;
       const initialConfig = state.configuration;
       const keyFields = getKeyFields(state);
       const ignoredFields = getIgnoredFields(state);
-
       const updatedDataset = configureDataset(newDataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
-      return { ...state, datasets: { ...state.datasets, [owner]: updatedDataset} };
+      const newState = { ...state, datasets: { ...state.datasets }}
+      Object.keys(datasets).forEach((key) => {
+        newState.datasets[key] = updatedDataset;
+        console.log(newState)
+      })
+      return newState
+    },
+    [updateView]: (state, { payload }) => {
+      const data = state.data;
+      const content = data.content;
+      const view = payload;
+      console.log(view)
+      const timestep = state.currentTimestep;
+      const newDataset = view ? content[timestep].red : content[timestep].true;
+      const datasets = state.datasets
+      const source = state.source;
+      const name = state.name;
+      const shortName = state.shortName;
+      const initialConfig = state.configuration;
+      const keyFields = getKeyFields(state);
+      const ignoredFields = getIgnoredFields(state);
+      const updatedDataset = configureDataset(newDataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
+      const newState = { ...state, datasets: { ...state.datasets }}
+      Object.keys(datasets).forEach((key) => {
+        newState.datasets[key] = updatedDataset;
+        console.log(newState)
+      })
+      return newState
+      
     },
     [setFilteredDataset]: (state, { payload }) => {
       const filtered = payload.filtered;
@@ -515,6 +542,6 @@ const selectDatasetIntersection = (state, startOwner, endOwner) => {
 
 export default reducer;
 
-export { setData, setDatasets, setDataset, updateDataset, selectDataset, selectDatasets, removeDataset, setFilteredDataset, selectFilteredDataset, removeFilteredDataset, selectConfiguration, selectMergedConfiguration,
+export { setData, setDatasets, setDataset, updateDataset, updateView, selectDataset, selectDatasets, removeDataset, setFilteredDataset, selectFilteredDataset, removeFilteredDataset, selectConfiguration, selectMergedConfiguration,
   selectValues, selectMergedValues, getFieldId, configurationFor, setIsFetching, getIsFetching, setKeyFields, getKeyFields, setIgnoredFields, getIgnoredFields, setCurrentTimestep, getCurrentTimestep,
   getHashFields, getLastUpdated, valuesFor, setDatasetDiff, removeDatasetDiff, selectDatasetDiff, selectDatasetIntersection, applyHashes, configureDataset };

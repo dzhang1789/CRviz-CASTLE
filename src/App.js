@@ -36,6 +36,7 @@ import DatasetUpload from 'features/dataset-controls/DatasetUpload';
 import { getDataToExport } from "features/dataset-controls/export";
 import TooltipControls from "features/tooltip/Tooltip";
 import TimestepSelector from "features/timestep-view-control/timestep";
+import ViewSelector from "features/timestep-view-control/view";
 
 import style from './App.module.css';
 
@@ -571,6 +572,9 @@ class App extends Component {
           </div>
           <div>
             <TimestepSelector />
+          </div>
+          <div>
+            <ViewSelector />
           </div>
       </div>
     );

@@ -20,8 +20,9 @@ const colorScheme = [
 ];
 const accessColorScheme = [
   "#3366cc",
+  "#d22b2b",
   "#ff4d00",
-  "#d22b2b"
+  
 ];
 
 const extendColorScheme = (colorScheme, count) => {

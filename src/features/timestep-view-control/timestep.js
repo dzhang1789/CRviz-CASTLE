@@ -1,12 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setCurrentTimestep } from "domain/dataset"
+import { setCurrentTimestep, updateDataset } from "domain/dataset"
 import selectorStyle from "./TimestepSelector.module.css"
 
-const TimestepSelector = ( {currentTimestep, setCurrentTimestep }) => {
+const TimestepSelector = ( {currentTimestep, setCurrentTimestep, updateDataset }) => {
     const handleChangeTimestep = (newTimestep) => {
         setCurrentTimestep(newTimestep);
+        updateDataset(newTimestep)
     };
+
 
     return(
         <div className={selectorStyle.timestepPanel}>
@@ -29,6 +31,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     setCurrentTimestep,
+    updateDataset
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimestepSelector);
