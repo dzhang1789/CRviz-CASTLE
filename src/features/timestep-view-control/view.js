@@ -1,14 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { setView, updateView } from "domain/dataset"
 import selectorStyle from "./View.module.css"
 
-const ViewSelector = ( { updateView }) => {
-    const view = useState(null)
+const ViewSelector = ( { view, setView, updateView}) => {
     const handleView = (e) => {
         const selectedValue = e.target.value;
         const boolean = selectedValue === "red" ? true : false;
-        console.log(boolean)
         setView(boolean);
         updateView(boolean);
     };
@@ -30,6 +28,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
+    setView,
     updateView
 };
 

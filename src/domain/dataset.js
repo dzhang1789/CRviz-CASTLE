@@ -256,7 +256,6 @@ const reducer = handleActions(
       }
     },
     [setDataset]: (state, { payload }) => {
-      console.log(state)
       const dataset = payload.dataset;
       const owner = payload.owner;
       const source = payload.source;
@@ -548,6 +547,6 @@ const selectDatasetIntersection = (state, startOwner, endOwner) => {
 
 export default reducer;
 
-export { setData, setDatasets, setDataset, updateDataset, setView,updateView, selectDataset, selectDatasets, removeDataset, setFilteredDataset, selectFilteredDataset, removeFilteredDataset, selectConfiguration, selectMergedConfiguration,
+export { setData, setDatasets, setDataset, updateDataset, setView, updateView, selectDataset, selectDatasets, removeDataset, setFilteredDataset, selectFilteredDataset, removeFilteredDataset, selectConfiguration, selectMergedConfiguration,
   selectValues, selectMergedValues, getFieldId, configurationFor, setIsFetching, getIsFetching, setKeyFields, getKeyFields, setIgnoredFields, getIgnoredFields, setCurrentTimestep, getCurrentTimestep,
   getHashFields, getLastUpdated, valuesFor, setDatasetDiff, removeDatasetDiff, selectDatasetDiff, selectDatasetIntersection, applyHashes, configureDataset };
