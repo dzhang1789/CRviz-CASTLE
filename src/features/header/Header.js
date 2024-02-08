@@ -32,7 +32,7 @@ class Header extends React.Component {
 			  <a href="http://www.cyberreboot.org/" target="_blank" rel="noopener noreferrer">
 			  	<img src={ logo } className={ style.logo } alt='Cyber Reboot' />
 			  </a>
-			  <span className={ style.appName }>CRviz</span>
+			  <span className={ style.appName }>CASTLEviz</span>
 			  <span className={ style.infoIcon }>
 				<label id="showInfo" onMouseEnter={this.showTooltip} onMouseLeave={this.hideTooltip}>
 			      <FontAwesomeIcon icon={faInfoCircle} />

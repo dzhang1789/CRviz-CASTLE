@@ -218,6 +218,7 @@ const setIsFetching = createAction("SET_IS_FETCHING");
 const setKeyFields = createAction("SET_KEY_FIELDS");
 const setIgnoredFields = createAction("SET_IGNORED_FIELDS");
 const setCurrentTimestep = createAction("SET_CURRENT_TIMESTEP");
+const setView = createAction("SET_VIEW")
 const updateView = createAction("UPDATE_VIEW");
 
 // REDUCERS
@@ -247,6 +248,12 @@ const reducer = handleActions(
         currentTimestep: payload,
       }
      
+    },
+    [setView]: (state, {payload}) => {
+      return {
+        ...state,
+        view: payload,
+      }
     },
     [setDataset]: (state, { payload }) => {
       console.log(state)
@@ -303,7 +310,6 @@ const reducer = handleActions(
         console.log(newState)
       })
       return newState
-      
     },
     [setFilteredDataset]: (state, { payload }) => {
       const filtered = payload.filtered;
@@ -542,6 +548,6 @@ const selectDatasetIntersection = (state, startOwner, endOwner) => {
 
 export default reducer;
 
-export { setData, setDatasets, setDataset, updateDataset, updateView, selectDataset, selectDatasets, removeDataset, setFilteredDataset, selectFilteredDataset, removeFilteredDataset, selectConfiguration, selectMergedConfiguration,
+export { setData, setDatasets, setDataset, updateDataset, setView,updateView, selectDataset, selectDatasets, removeDataset, setFilteredDataset, selectFilteredDataset, removeFilteredDataset, selectConfiguration, selectMergedConfiguration,
   selectValues, selectMergedValues, getFieldId, configurationFor, setIsFetching, getIsFetching, setKeyFields, getKeyFields, setIgnoredFields, getIgnoredFields, setCurrentTimestep, getCurrentTimestep,
   getHashFields, getLastUpdated, valuesFor, setDatasetDiff, removeDatasetDiff, selectDatasetDiff, selectDatasetIntersection, applyHashes, configureDataset };

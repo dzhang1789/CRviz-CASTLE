@@ -1,12 +1,7 @@
 .viewPanel {
-    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
     align-items: center;
-    padding: 10px;
-    background-color: #fff;
 }
 
-.inputStyle {
-    margin-right: 10px;
-    padding: 12px;
-    font-size: 14px;
-}

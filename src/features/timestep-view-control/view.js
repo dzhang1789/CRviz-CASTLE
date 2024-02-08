@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { connect } from "react-redux";
-import { updateView } from "domain/dataset"
+import { setView, updateView } from "domain/dataset"
+import selectorStyle from "./View.module.css"
 
 const ViewSelector = ( { updateView }) => {
     const view = useState(null)
@@ -8,12 +9,13 @@ const ViewSelector = ( { updateView }) => {
         const selectedValue = e.target.value;
         const boolean = selectedValue === "red" ? true : false;
         console.log(boolean)
+        setView(boolean);
         updateView(boolean);
     };
 
     return(
-        <div>
-            <select onChange={handleView} value={view ? "red" : "true"}>
+        <div className={selectorStyle.viewPanel}>
+            <select onChange={handleView}>
                 <option value='red'>Red</option>
                 <option value='true'>True</option>
             </select>

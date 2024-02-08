@@ -1,7 +1,10 @@
 export const appendLabels = ({nodes, labeledField}) => {
-    const labels = nodes
-    .append("text")
-    .classed("node-label", true)
+    const filteredNodes = nodes.filter((d) => {
+        return d.height === 0 && d.parent !== null;
+    });
+    const labels = filteredNodes
+    .selectAll("text")
+    .attr("class", "node-label")
     .attr("text-anchor", "middle")
     .attr("dy", '0.3em')
     .text((d) => getLabelText(d))
@@ -16,8 +19,5 @@ export const getLabelText = (datum) => {
 
         return ip_label;
     }
-
-    
-
     
 };
