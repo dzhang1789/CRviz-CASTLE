@@ -117,7 +117,7 @@ const formatPayload = async (data, store) => {
   const source = data.source;
   const result = await resolveRefs(data.content);
   const content = result.resolved;
-
+  const heatmap = content.heatmap;
   const redArray = content[currentTimestep]?.red || [];
   const trueArray = content[currentTimestep]?.true || [];
 
@@ -133,7 +133,9 @@ const formatPayload = async (data, store) => {
 
   var final = {};
 
-  if(dataset){
+  if(heatmap){
+    final[owner] = { 'dataset' : heatmap };
+  } else if (dataset) {
     final[owner] =  { 'dataset': dataset };
   } else {
     throw ValidationError('Data in invalid format');
@@ -146,7 +148,6 @@ const formatPayload = async (data, store) => {
     const initialConfig = final[owner].configuration;
     final[owner] =  configureDataset(dataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
   })
-  console.log(final)
 
   data = { 
           'data' : datasets,

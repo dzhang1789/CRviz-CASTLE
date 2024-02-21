@@ -17,8 +17,9 @@ import {
 
 import className from "./class-name";
 import { colorScheme, accessColorScheme, extendColorScheme } from './color-scheme';
+import heatmapColor from './heatmap';
 
-function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig }) {
+function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig, heatmapMode }) {
   if (!coloredField) {
     legend.style("display", "none");
 
@@ -38,7 +39,14 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
     legend.style("display", null);
   }
 
-  const getValue = either(path(coloredField.path), path(["fieldValue"]));
+  const getValue = (item) => {
+    const pathValue = coloredField.path === 0 ? item[coloredField.path] : path(coloredField.path, item)
+
+    if (pathValue === 0) {
+      return 0;
+    }
+    return pathValue || item.fieldValue || undefined;
+  } 
 
   // If coloring groupings, don't color devices with the same value
   const isColoringGroup = contains(coloredField, hierarchyConfig);
@@ -52,6 +60,9 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
   var scheme = [];
   if (coloredField.path == 'Access'){
     scheme = accessColorScheme
+  } else if (heatmapMode) {
+    console.log(values)
+    scheme = values.map((value) => heatmapColor(value))
   } else {
     scheme = extendColorScheme(colorScheme, values.length);
   }
@@ -63,11 +74,11 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
       className: `legend-color-${index}`
     }
   });
-  
   const coloring = zip(values, configs);
   const colorMap = fromPairs(coloring);
-  
+
   createStylesheet(coloring);
+
 
   const state = { nodes: [] }
 
@@ -80,6 +91,11 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
       return;
     }
 
+    // if (heatmapMode) {
+    //   colorNodesHeatMap({ nodes, colorMap, coloredField, isColoringGroup });
+    //   colorAnnotationsHeatmap({ annotations, colorMap, coloredField, isColoringGroup })
+    // } else {
+      
     colorNodes({ nodes, colorMap, getValue, coloredField, isColoringGroup });
     colorAnnotations({ annotations, colorMap, getValue, coloredField, isColoringGroup })
     updateLegend({ legend, colorMap, toggleValue })
@@ -147,6 +163,46 @@ const createStylesheet = (coloring) => {
     .html(html)
 }
 
+// const colorNodesHeatMap = ({ nodes, colorMap, coloredField, isColoringGroup }) => {
+//   nodes
+//     .filter((d) => d.height === 0)
+//     .select("circle")
+//     .attr('class', (d) => {
+//       const color = heatmapColor(d.data.frequency);
+//       const { disabled, className } = colorMap[color] || {};
+//       return !isColoringGroup && !disabled && className ? className : null;
+//     });
+
+//     nodes
+//     .filter((d) => d.height > 0)
+//     .classed("viz-coloredNode", (d) => {
+//       const color = heatmapColor(d.data.frequency);
+//       const { disabled } = colorMap[color]|| {};
+//       return !disabled &&
+//         equals(d.data.field, coloredField) 
+//     })
+//     .select("circle")
+//     .attr('class', (d) => {
+//       const color = heatmapColor(d.data.frequency);
+//       const { disabled, className } = colorMap[color] || {};
+//       return isColoringGroup
+//         && equals(d.data.field, coloredField)
+//         && !disabled
+//         && className;
+//       });
+// }
+
+// const colorAnnotationsHeatmap = ({ annotations, colorMap, coloredField }) => {
+//   if (annotations) {
+//     annotations
+//     .select(`g.${className("total-container")}`)
+//     .attr('class', (d) => {
+//       const color = heatmapColor(d.data.frequency);
+//       const { disabled, className } = colorMap[color] || {};
+//       return !disabled && className ? className : null;
+//     });
+//   }
+// }
 const colorNodes = ({ nodes, colorMap, getValue, coloredField, isColoringGroup }) => {
   nodes
     .filter((d) => d.height === 0)

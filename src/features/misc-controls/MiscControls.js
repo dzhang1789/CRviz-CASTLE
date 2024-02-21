@@ -5,13 +5,15 @@ import {
   showNodes,
   useDarkTheme,
   colorBy,
-  selectControls
+  selectControls,
+  useHeatmap
 } from "domain/controls";
 import { selectMergedConfiguration, selectMergedValues, getFieldId } from "domain/dataset";
 
 import FieldSelect from "./FieldSelect";
 
 import style from "./MiscControls.module.css";
+import { use } from "chai";
 
 function MiscControls(props) {
   const {
@@ -24,6 +26,9 @@ function MiscControls(props) {
   const fields = configuration.fields.filter((f) => f.groupable);
   const darkThemeChanged = (checked) => {
     props.useDarkTheme(checked)
+  };
+  const heatmapChanged = (checked) => {
+    props.useHeatmap(checked)
   };
   return (
     <div className={style.container}>
@@ -53,6 +58,20 @@ function MiscControls(props) {
           </label>
         </div>
         <label>Use dark theme</label>
+      </div>
+
+      <div className={`${style.checkboxContainer} input-group`}>
+        <div className={ style.switch }>
+          <input
+            type="checkbox"
+            id="heatmap-check"
+            checked={controls.heatmap}
+            onChange={(evt) => heatmapChanged(evt.target.checked)}
+          />
+          <label htmlFor="heatmap-check" className={ style.switchLabel }> 
+          </label>
+        </div>
+        <label>Use Heatmap</label>
       </div>
 
       <div className={`input-group ${style.colorBy}`}>
@@ -85,7 +104,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     showNodes: (shouldShowNodes) => dispatch(showNodes(shouldShowNodes)),
     useDarkTheme: (darkTheme) => dispatch(useDarkTheme(darkTheme)),
-    colorBy: (field) => dispatch(colorBy(field))
+    colorBy: (field) => dispatch(colorBy(field)),
+    useHeatmap: (heatmap) => dispatch(useHeatmap(heatmap))
   };
 };
 

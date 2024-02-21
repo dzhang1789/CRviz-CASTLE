@@ -284,7 +284,6 @@ const reducer = handleActions(
       const newState = { ...state, datasets: { ...state.datasets }}
       Object.keys(datasets).forEach((key) => {
         newState.datasets[key] = updatedDataset;
-        console.log(newState)
       })
       return newState
     },
@@ -292,7 +291,7 @@ const reducer = handleActions(
       const data = state.data;
       const content = data.content;
       const view = payload;
-      console.log(view)
+  
       const timestep = state.currentTimestep;
       const newDataset = view ? content[timestep].red : content[timestep].true;
       const datasets = state.datasets
@@ -306,7 +305,6 @@ const reducer = handleActions(
       const newState = { ...state, datasets: { ...state.datasets }}
       Object.keys(datasets).forEach((key) => {
         newState.datasets[key] = updatedDataset;
-        console.log(newState)
       })
       return newState
     },

@@ -7,7 +7,6 @@ const TimestepSelector = ( {currentTimestep, setCurrentTimestep, updateDataset }
     const handleChangeTimestep = (newTimestep) => {
         setCurrentTimestep(newTimestep);
         updateDataset(newTimestep)
-        console.log("test");
     };
 
 
