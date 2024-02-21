@@ -48,6 +48,7 @@ class Visualization extends React.PureComponent {
       notes:this.props.notes,
       hoverStatus: this.props.hoverStatus,
       resetNodeStyles: this.props.resetNodeStyles,
+      heatmapMode: this.props.controls.heatmapMode
     });
   }
 

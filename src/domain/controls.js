@@ -9,7 +9,8 @@ const defaultState = {
   end: null, // The uuid of the dataset to use as the end point for comparison
   showBusy: false, //display the activity icon
   position: [0,0], // The position used for a mouse click
-  datum: null //
+  datum: null, //
+  heatmapMode: false //Whether to enable heatmap view
 };
 
 // ACTION CREATORS
@@ -24,6 +25,7 @@ const colorBy = createAction("COLOR_BY");
 const showBusy = createAction("SHOW_BUSY");
 const setPosition = createAction("POSITION");
 const setSelectedDatum = createAction("SETSELECTEDDATUM");
+const useHeatmap = createAction("USE_HEATMAP");
 
 // REDUCERS
 
@@ -38,6 +40,7 @@ const reducer = handleActions(
       const end = payload.end || state.end;
       const showBusy = ('showBusy' in payload) ? !!payload.showBusy : state.showBusy;
       const position = payload.position || state.position;
+      const heatmapMode = ('heatmap'  in payload) ? !!payload.heatmap : state.heatmap;
       return { 
         ...state,
         hierarchyConfig: hierarchyConfig,
@@ -47,7 +50,8 @@ const reducer = handleActions(
         start: start,
         end: end,
         showBusy: showBusy,
-        position: position
+        position: position,
+        heatmapMode: heatmapMode
       }
     },
     [setStartDataset]: (state, { payload }) => ({ ...state, start: payload }),
@@ -59,6 +63,7 @@ const reducer = handleActions(
     [showBusy]: (state, { payload }) => ({ ...state, showBusy: !!payload }),
     [setPosition]: (state, { payload }) => ({ ...state, position: payload }),
     [setSelectedDatum]: (state, { payload }) => ({ ...state, selectedDatum: payload }),
+    [useHeatmap]: (state, { payload }) => ({ ...state, heatmapMode:payload }),
   },
   defaultState
 );
@@ -69,4 +74,4 @@ const getPosition = (state) => state.controls.position;
 const getSelectedDatum = (state) => state.controls.selectedDatum;
 
 export default reducer;
-export { setControls, setHierarchyConfig, showNodes, colorBy, useDarkTheme, selectControls, setStartDataset, setEndDataset, showBusy, setPosition, getPosition, setSelectedDatum, getSelectedDatum };
+export { setControls, setHierarchyConfig, showNodes, colorBy, useDarkTheme, selectControls, setStartDataset, setEndDataset, showBusy, setPosition, getPosition, setSelectedDatum, getSelectedDatum, useHeatmap };

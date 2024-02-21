@@ -23,7 +23,7 @@ import setupTooltip from "./d3-viz/setup-tooltip";
 import setupLegend from "./d3-viz/setup-legend";
 import setupAnnotations from "./d3-viz/setup-annotations";
 import datumKey from "./d3-viz/datum-key";
-import {appendLabels} from "./d3-viz/label-nodes";
+import { appendLabels } from "./d3-viz/label-nodes";
 
 function d3Viz(rootNode) {
   const root = select(rootNode);
@@ -92,7 +92,8 @@ function d3Viz(rootNode) {
     height: rootNode.clientHeight,
     showNodes: true,
     coloredField: null,
-    queryString: ''
+    queryString: '',
+    heatmapMode: null
   };
 
   const state = {
@@ -103,7 +104,7 @@ function d3Viz(rootNode) {
     countLabels: null,
     zoom: null,
     selectedNode: null,
-    legend: null
+    legend: null,
   };
 
   new ResizeSensor(rootNode, debounce(() => update(props), 100));
@@ -126,6 +127,8 @@ function d3Viz(rootNode) {
 
     const legendUpdated = !allEqProps(["coloredField", "hierarchyConfig", "data"], props, nextProps);
 
+    const heatmapUpdated = !allEqProps(['heatmapMode'], props, nextProps);
+
     props = nextProps;
 
     if (dataUpdated) {
@@ -134,6 +137,10 @@ function d3Viz(rootNode) {
     }
 
     rerender(props, state);
+
+    if(heatmapUpdated){
+      updateHeatmap(props, state);
+    }
 
     if (legendUpdated) {
       resetLegend(props, state);
@@ -178,11 +185,13 @@ function d3Viz(rootNode) {
       noteIdHovered: props.noteIdHovered,
       hasNoNotes: props.hoverStatus,
       resetNodeStyles: props.resetNodeStyles,
+      heatmapMode: props.heatmapMode
     });
 
     const labels = appendLabels({
       nodes: nodes,
       labeledField: props.data,
+      heatmapMode: props.heatmapMode
     });
 
     setupTooltip({
@@ -195,12 +204,26 @@ function d3Viz(rootNode) {
     state.labels = labels;
   };
 
+  const updateHeatmap = (props, state) => {
+    state.legend = setupLegend({
+      legend: legend,
+      hierarchyConfig: props.hierarchyConfig,
+      data: props.data,
+      coloredField: props.coloredField,
+      heatmapMode: props.heatmapMode
+      
+    });
+    if(state.legend != null){
+      state.legend.update({ nodes: state.nodes, annotations: state.annotations })
+    }
+  }
   const resetLegend = (props, state) => {
     state.legend = setupLegend({
       legend: legend,
       hierarchyConfig: props.hierarchyConfig,
       data: props.data,
-      coloredField: props.coloredField
+      coloredField: props.coloredField,
+      heatmapMode: props.heatmapMode
     });
 
     if(state.legend != null){
@@ -208,6 +231,8 @@ function d3Viz(rootNode) {
     }
   };
   
+
+
   const resetZoom = (props, state) => {
     state.zoom = setupZoom({
       zoomRoot: zoomRoot,

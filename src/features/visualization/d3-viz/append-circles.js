@@ -1,10 +1,11 @@
 import { select } from "d3";
 import { path } from "d3-path";
+import heatmapColor from "./heatmap";
 
 import datumKey from "./datum-key";
 import className from "./class-name";
 
-const appendCircles = ({ nodeRoot, labelRoot, packedData, showNodes, hasSearch, noteIdHovered,hasNoNotes, resetNodeStyles }) => {
+const appendCircles = ({ nodeRoot, labelRoot, packedData, showNodes, hasSearch, noteIdHovered,hasNoNotes, resetNodeStyles, heatmapMode }) => {
   const data = packedData.descendants();
   const firstLeaf = packedData.leaves()[0];
   const leafRadius = firstLeaf.r || 0;
@@ -162,7 +163,7 @@ const scaleAndTrimToLabelWidth = (node, datum, initialFontScale) => {
   if(boxWidth > maxTextWidth)
   {
     const lengthToTrimTo = Math.trunc(0.75*labelText.length);
-    labelText = labelText.substr(0, lengthToTrimTo) + "..."
+    // labelText = labelText.substr(0, lengthToTrimTo) + "..."
     select(node)
     .attr('textLength', maxTextWidth)
     .attr('lengthAdjust', "spacingAndGlyphs")
