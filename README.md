@@ -11,32 +11,17 @@ For a live demo, please check out https://iqtlabs.github.io/CRviz/
 
 ## Build and run
 
-### With Docker
-
-This project includes a Dockerfile for convenient building and deployment.
-
-To build and run, use the following command:
-
-```
-docker build -t crviz .
-docker run -dp 80:5000 crviz
-```
-
-Note that if changes are made on the host machine, the build served by the docker container will not be updated. To stop the running deployment and kill the docker server:
-
-```
-docker stop crviz
-```
-
-### Without Docker
-1. Install or update npm (`sudo apt install npm`, `npm install -g npm`)
-2. Clone CRViz repo `git clone https://github.com/IQTLabs/CRviz.git`
-3. `cd CRViz`
-4. Run `npm install && npm run build`
+### Installing Node
+1. Create a new local env using conda 
+2. Install nvm (`https://github.com/nvm-sh/nvm`)
+3. Install npm on v16.0.0 (`nvm install v16.0.0`)
+4. Clone CRViz repo `git clone https://github.com/IQTLabs/CRviz.git`
+5. `cd CRViz`
+6. Run `npm install && npm run build`
 
 The static files in the `./build` directory should be ready for deployment.
 
-To serve the application locally, run `npm start`.
+To serve the application locally, run `npm run start`.
 Changes made in your code will be automatically reloaded on http://localhost:5000.
 
 ## Data Input
