@@ -273,6 +273,7 @@ const reducer = handleActions(
       const content = data.content;
       const view = state.view;
       const newDataset = view ? content[payload].red : content[payload].true;
+      const action_reward = view ? content[payload].red_ar : content[payload].true_ar
       const datasets = state.datasets
       const source = state.source;
       const name = state.name;
@@ -285,6 +286,7 @@ const reducer = handleActions(
       Object.keys(datasets).forEach((key) => {
         newState.datasets[key] = updatedDataset;
       })
+      console.log(action_reward);
       return newState
     },
     [updateView]: (state, { payload }) => {
@@ -294,6 +296,7 @@ const reducer = handleActions(
   
       const timestep = state.currentTimestep;
       const newDataset = view ? content[timestep].red : content[timestep].true;
+      const action_reward = view ? content[timestep].red_ar : content[timestep].true_ar
       const datasets = state.datasets
       const source = state.source;
       const name = state.name;
@@ -306,6 +309,7 @@ const reducer = handleActions(
       Object.keys(datasets).forEach((key) => {
         newState.datasets[key] = updatedDataset;
       })
+      console.log(action_reward)
       return newState
     },
     [setFilteredDataset]: (state, { payload }) => {

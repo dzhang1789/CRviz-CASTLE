@@ -37,6 +37,7 @@ import { getDataToExport } from "features/dataset-controls/export";
 import TooltipControls from "features/tooltip/Tooltip";
 import TimestepSelector from "features/timestep-view-control/timestep";
 import ViewSelector from "features/timestep-view-control/view";
+import ActionRewardSelector from "features/timestep-view-control/actionreward";
 
 import style from './App.module.css';
 
@@ -569,6 +570,9 @@ class App extends Component {
   
           <div >
             <TooltipControls />
+          </div>
+          <div>
+            <ActionRewardSelector />
           </div>
           <div>
             <TimestepSelector />

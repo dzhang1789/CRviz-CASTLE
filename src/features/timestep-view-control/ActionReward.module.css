@@ -1,0 +1,7 @@
+.actionRewardPanel {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    right: 25%;
+    align-items: center;
+}
