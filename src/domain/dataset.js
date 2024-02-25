@@ -279,7 +279,7 @@ const reducer = handleActions(
       const content = data.content;
       const view = state.view;
       // ignore changes if the timestep is invalid
-      if (payload < 0 || payload >= content.length) {
+      if (payload == "" || payload < 0 || payload >= content.length) {
         return state;
       }
       const newDataset = view ? content[payload].red : content[payload].true;
