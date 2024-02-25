@@ -1,17 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setCurrentTimestep, updateDataset, updateView, setView } from "domain/dataset"
+import { updateDataset, updateView, setView } from "domain/dataset"
 import selectorStyle from "./ActionReward.module.css"
 
 const ActionRewardSelector = ( { currentTimestep, updateDataset, updateView}) => {
-    const handleChangeTimestep = (newTimestep) => {
-        setCurrentTimestep(newTimestep);
-        updateDataset(newTimestep)
-    };
-
     return(
         <div className={selectorStyle.actionRewardPanel}>
-            <h1></h1>
+            <h1 id="action-reward-container">
+                <span id="action-label" className={selectorStyle.actionLabel}></span>
+                <span id="reward-label" className={selectorStyle.rewardLabel}></span>
+            </h1>
         </div>
     )
 }

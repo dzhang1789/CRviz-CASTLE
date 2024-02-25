@@ -1,7 +1,17 @@
 .actionRewardPanel {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    right: 25%;
+    position: absolute;
+    top: 0;
+    width: 70%;
+    left: 20%;
     align-items: center;
+}
+
+.actionLabel {
+    position: absolute;
+    left: 0;
+}
+
+.rewardLabel {
+    position: absolute;
+    right: 0;
 }
