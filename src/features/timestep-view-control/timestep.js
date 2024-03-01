@@ -1,13 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import { connect } from "react-redux";
 import { setCurrentTimestep, updateDataset } from "domain/dataset"
 import selectorStyle from "./TimestepSelector.module.css"
 
 const TimestepSelector = ( {currentTimestep, setCurrentTimestep, updateDataset }) => {
-    const handleChangeTimestep = (newTimestep) => {
-        setCurrentTimestep(newTimestep);
-        updateDataset(newTimestep)
+    const [pendingTimestep, setPendingTimestep] = useState(currentTimestep);
+
+    const handleChangeTimestep = (e) => {
+        setPendingTimestep(e.target.value);
     };
+
+    const handleConfirm = () => {
+        setCurrentTimestep(pendingTimestep);
+        updateDataset(pendingTimestep)
+    }
 
 
     return(
@@ -17,8 +23,13 @@ const TimestepSelector = ( {currentTimestep, setCurrentTimestep, updateDataset }
                 className={selectorStyle.inputStyle}
                 placeholder="Enter Timestep"
                 value={currentTimestep}
-                onChange={(e) => handleChangeTimestep(e.target.value)}
+                onChange={handleChangeTimestep}
             />
+            <button 
+                className={selectorStyle.inputButton} 
+                onClick={handleConfirm}
+                > GO
+            </button>
         </div>
     )
 }
