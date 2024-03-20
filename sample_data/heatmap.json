@@ -3,22 +3,22 @@
         {
             "name": "Enterprise0",
             "subnet": "Enterprise",
-            "freq": 0.1058
+            "freq": 0.1
         },
         {
             "name": "Enterprise1",
             "subnet": "Enterprise",
-            "freq": 0.218
+            "freq": 0.15
         },
         {
             "name": "Enterprise2",
             "subnet": "Enterprise",
-            "freq": 0.0
+            "freq": 0.2
         },
         {
             "name": "Defender",
             "subnet": "Enterprise",
-            "freq": 0.0002
+            "freq": 0.16
         },
         {
             "name": "Op_Server0",
@@ -33,37 +33,37 @@
         {
             "name": "Op_Host1",
             "subnet": "Operational",
-            "freq": 0
+            "freq": 0.3
         },
         {
             "name": "Op_Host2",
             "subnet": "Operational",
-            "freq": 0
+            "freq": 0.05
         },
         {
             "name": "User0",
             "subnet": "User",
-            "freq": 0.0001
+            "freq": 0.05
         },
         {
             "name": "User1",
             "subnet": "User",
-            "freq": 0.1217
+            "freq": 0.1
         },
         {
             "name": "User2",
             "subnet": "User",
-            "freq": 0.3216
+            "freq": 0.105
         },
         {
             "name": "User3",
             "subnet": "User",
-            "freq": 0.1298
+            "freq": 0.1
         },
         {
             "name": "User4",
             "subnet": "User",
-            "freq": 0.1027
+            "freq": 0.1
         }
     ]
 }

@@ -108,5 +108,5 @@ Here are some quick commands to get started:
 
 - If visualizing a heatmap
   - Open the data tab and upload a dataset that is specifically in the format of a heatmap dataset. An example of
-  this can be found here [heatmap.json]()
+  this can be found here [heatmap.json](https://github.com/dzhang1789/CRviz-CASTLE/blob/master/sample_data/heatmap.json)
   - Open the grouping tab and check the button next to **Use Heatmap**
