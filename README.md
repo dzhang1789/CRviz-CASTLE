@@ -102,5 +102,11 @@ Here are some quick commands to get started:
 
 - If performing a standard visualization:
   - Open the data tab on the left hand and upload a dataset. Datasets will need to be created through the use of
-  our parser [CRVIZ-parse.py]().
-  - 
+  our parser [CRVIZ-parse.py](https://github.com/dzhang1789/CRviz-CASTLE/blob/master/scripts/CRviz-parse.py).
+  - Open the grouping tab on the left hand side. Click the the dropdown menu next to **Color By** and click **Access**
+  - Drag the slider **Subnet** into the **Group By** drop section.
+
+- If visualizing a heatmap
+  - Open the data tab and upload a dataset that is specifically in the format of a heatmap dataset. An example of
+  this can be found here [heatmap.json]()
+  - Open the grouping tab and check the button next to **Use Heatmap**
