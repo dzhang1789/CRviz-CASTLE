@@ -97,3 +97,10 @@ Here are some quick commands to get started:
   - `cd .git`
   - `cd hooks`
   - `rm pre-commit`
+
+### Using the Visualization
+
+- If performing a standard visualization:
+  - Open the data tab on the left hand and upload a dataset. Datasets will need to be created through the use of
+  our parser [CRVIZ-parse.py]().
+  - 

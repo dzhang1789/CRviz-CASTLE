@@ -57,14 +57,28 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
     sortBy(identity)
   )(data);
 
+  let coloring;
   var scheme = [];
   if (coloredField.path == 'Access'){
     scheme = accessColorScheme
+    const configs = scheme.map((color, index) => {
+      const value = ['None', 'Privileged', 'Scanned', 'User'][index];
+
+      return {
+        color,
+        disabled: false,
+        className: `legend-color-${index}`,
+        value
+      }
+    });
+    coloring = zip(['None', 'Privileged', 'Scanned', 'User'], configs);
+
   } else if (heatmapMode) {
-    console.log(values)
     scheme = values.map((value) => heatmapColor(value))
+    coloring = zip(values, configs);
   } else {
     scheme = extendColorScheme(colorScheme, values.length);
+    coloring = zip(values, configs);
   }
   
   const configs = scheme.map((color, index) => {
@@ -74,14 +88,12 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
       className: `legend-color-${index}`
     }
   });
-  const coloring = zip(values, configs);
   const colorMap = fromPairs(coloring);
 
   createStylesheet(coloring);
 
-
   const state = { nodes: [] }
-
+  
   function update({ nodes, annotations }) {
     state.nodes = nodes;
     //state.annotations = annotations;
@@ -95,7 +107,6 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
     //   colorNodesHeatMap({ nodes, colorMap, coloredField, isColoringGroup });
     //   colorAnnotationsHeatmap({ annotations, colorMap, coloredField, isColoringGroup })
     // } else {
-      
     colorNodes({ nodes, colorMap, getValue, coloredField, isColoringGroup });
     colorAnnotations({ annotations, colorMap, getValue, coloredField, isColoringGroup })
     updateLegend({ legend, colorMap, toggleValue })

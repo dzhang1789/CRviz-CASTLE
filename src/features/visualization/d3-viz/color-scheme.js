@@ -19,8 +19,9 @@ const colorScheme = [
   "#333399"
 ];
 const accessColorScheme = [
-  "#3366cc",
+  "#7097e6",
   "#d22b2b",
+  "#ffc000",
   "#ff4d00",
   
 ];

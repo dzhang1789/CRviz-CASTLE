@@ -6,8 +6,16 @@
 }
 
 .inputStyle {
-    margin-right: 50px;
+    margin-right: 0px;
     padding: 6px;
     font-size: 14px;
     width:150px;
+}
+
+.inputButton {
+    margin-right: 100px;
+    padding: 6px;
+    font-size: 14px;
+    width:50px;
+    background-color:white;
 }
