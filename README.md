@@ -110,3 +110,16 @@ Here are some quick commands to get started:
   - Open the data tab and upload a dataset that is specifically in the format of a heatmap dataset. An example of
   this can be found here [heatmap.json](https://github.com/dzhang1789/CRviz-CASTLE/blob/master/sample_data/heatmap.json)
   - Open the grouping tab and check the button next to **Use Heatmap**
+  - Drag the slider **Subnet** into the **Group By** drop section.
+
+- General Usage
+  - After data has been loaded into the visual, the timestep of the data can be manipulated using the controls in the
+  bottom right. The time can be changed via either the arrows or manual input. To place the changes into effect, hit
+  the **GO** button
+  - If observing a dataset that contains the red agent along with a holistic view of the network topology, this can be 
+  changed using the button that defaults to **Red** at the bottom right of the visual. Open the menu and choose the
+  appropriate view.
+    - The action displayed will be corresponding to the agent of the current view.
+  - After creating groupings through the **Subnet** we can zoom onto specific subnets. To do so, hover over the subnet
+  and it should highlight. Click into it and the visual should zoom. To exit this, click on any surrounding gray area
+  outside the subnet grouping.
