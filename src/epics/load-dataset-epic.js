@@ -20,6 +20,7 @@ const loadDatasetEpic = (action$, store) => {
     ,mergeMap(async ({ payload }) => {
       try{
         const formattedPayload = await formatPayload(payload, store);
+        console.log('process finished')
         return formattedPayload;
       } catch (error) {
         if (is(ValidationError, error)) {
@@ -39,7 +40,6 @@ const loadDatasetEpic = (action$, store) => {
         currentTimestep,
         view
       } = formattedPayload
-
     
       return of(
         setData(formattedPayload)
@@ -108,9 +108,10 @@ const CSVconvert = (data) => {
 //if we have a naked array or an object not containing a dataset instead of an object containing a dataset
 //transfer the array into an object's dataset to maintain a consistent
 //schema with what is used elsewhere see https://github.com/IQTLabs/CRviz/issues/33
-const formatPayload = async (data, store) => {
+const formatPayload = async (data) => {
   const view = true;
-  const currentTimestep = store.value.dataset.currentTimestep.currentTimestep;
+  const currentTimestep = '0';
+  console.log(currentTimestep)
   const owner = data.owner;
   const initialName = data.name;
   const initialShortName = data.shortName;

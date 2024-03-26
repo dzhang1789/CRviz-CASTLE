@@ -123,12 +123,13 @@ class DatasetControls extends React.Component {
       return this.resetDataset();
     }
 
-    this.props.removeDataset({owner: this.props.uuid});
+    // this.props.removeDataset({owner: this.props.uuid});
     this.props.removeSearchIndex({owner: this.props.uuid});
     this.props.stopRefresh();
 
     const showUrlEntry = dataset === CUSTOM_DATASET;
     const showUpload = dataset === UPLOAD_DATASET;
+    console.log(showUpload)
     this.setState({ 
       showUrlEntry: showUrlEntry,
       showUpload: showUpload,
