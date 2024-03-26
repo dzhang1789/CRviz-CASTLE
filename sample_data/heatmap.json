@@ -1,0 +1,69 @@
+{
+    "heatmap": [
+        {
+            "name": "Enterprise0",
+            "subnet": "Enterprise",
+            "freq": 0.1
+        },
+        {
+            "name": "Enterprise1",
+            "subnet": "Enterprise",
+            "freq": 0.15
+        },
+        {
+            "name": "Enterprise2",
+            "subnet": "Enterprise",
+            "freq": 0.2
+        },
+        {
+            "name": "Defender",
+            "subnet": "Enterprise",
+            "freq": 0.16
+        },
+        {
+            "name": "Op_Server0",
+            "subnet": "Operational",
+            "freq": 0
+        },
+        {
+            "name": "Op_Host0",
+            "subnet": "Operational",
+            "freq": 0
+        },
+        {
+            "name": "Op_Host1",
+            "subnet": "Operational",
+            "freq": 0.3
+        },
+        {
+            "name": "Op_Host2",
+            "subnet": "Operational",
+            "freq": 0.05
+        },
+        {
+            "name": "User0",
+            "subnet": "User",
+            "freq": 0.05
+        },
+        {
+            "name": "User1",
+            "subnet": "User",
+            "freq": 0.1
+        },
+        {
+            "name": "User2",
+            "subnet": "User",
+            "freq": 0.105
+        },
+        {
+            "name": "User3",
+            "subnet": "User",
+            "freq": 0.1
+        },
+        {
+            "name": "User4",
+            "subnet": "User",
+            "freq": 0.1
+        }
+    ]
+}
