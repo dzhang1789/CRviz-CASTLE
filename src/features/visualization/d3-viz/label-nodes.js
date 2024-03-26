@@ -23,7 +23,7 @@ export const getFontSize = (datum) => {
 export const getLabelText = (datum, heatmapMode) => {
     if (datum.height === 0 && datum.parent !== null){
         if (heatmapMode) {
-            const label = datum.data["hostname"]
+            const label = datum.data["name"]
             return label
         } else {
             const ip_address = datum.data["IP Address"]

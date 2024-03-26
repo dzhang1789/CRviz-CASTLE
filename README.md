@@ -103,7 +103,7 @@ Here are some quick commands to get started:
 - If performing a standard visualization:
   - Open the data tab on the left hand and upload a dataset. Datasets will need to be created through the use of
   our parser [CRVIZ-parse.py](https://github.com/dzhang1789/CRviz-CASTLE/blob/master/scripts/CRviz-parse.py).
-  If you would like to create your own parser, please follow the data structure as defined below.
+
   - Open the grouping tab on the left hand side. Click the the dropdown menu next to **Color By** and click **Access**
   - Drag the slider **Subnet** into the **Group By** drop section.
 
@@ -123,10 +123,4 @@ Here are some quick commands to get started:
     - The action displayed will be corresponding to the agent of the current view.
   - After creating groupings through the **Subnet** we can zoom onto specific subnets. To do so, hover over the subnet
   and it should highlight. Click into it and the visual should zoom. To exit this, click on any surrounding gray area
-  outside the subnet grouping.
 
-### Data structure
-- The data will be a list of dictionaries, where each dictionary represents a timestep of the data. In each dictionary,
-four keys are necessary: red_ar, true_ar, red, and true. These represent the red action, blue action, red view, and 
-true view of the network. The values for all these keys should be presented within a list. For the red and true views,
-nodes will be represented as dictionaries within the list. Each dictionary should represent a unique node.
