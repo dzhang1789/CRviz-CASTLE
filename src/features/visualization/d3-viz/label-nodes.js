@@ -24,7 +24,6 @@ export const getFontSize = (datum) => {
 
     return `${fontSize}px`;
 }
-<<<<<<< HEAD
 export const getLabelText = (datum) => {
     const regex = /hostname/i
 
@@ -32,19 +31,6 @@ export const getLabelText = (datum) => {
         for (let key in obj) {
             if (key.match(regex)){
                 return key;
-=======
-export const getLabelText = (datum, heatmapMode) => {
-    if (datum.height === 0 && datum.parent !== null){
-        if (heatmapMode) {
-            const label = datum.data["name"]
-            return label
-        } else {
-            const ip_address = datum.data["IP Address"]
-            if (ip_address) {
-                const ip_parts = ip_address.split(".");
-                const ip_label = ip_parts[ip_parts.length - 1];
-                return ip_label;
->>>>>>> 2fbed997d76fbad29d3e3791e40f2a9fae654e58
             }
         }
         return null;
