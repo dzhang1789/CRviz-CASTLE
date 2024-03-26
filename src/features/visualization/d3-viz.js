@@ -190,8 +190,7 @@ function d3Viz(rootNode) {
 
     const labels = appendLabels({
       nodes: nodes,
-      labeledField: props.data,
-      heatmapMode: props.heatmapMode
+      labeledField: props.data
     });
 
     setupTooltip({
