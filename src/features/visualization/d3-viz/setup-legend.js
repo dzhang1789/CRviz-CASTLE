@@ -75,19 +75,27 @@ function setupLegend({ legend, data, hierarchyConfig, coloredField, legendConfig
 
   } else if (heatmapMode) {
     scheme = values.map((value) => heatmapColor(value))
+    const configs = scheme.map((color, index) => {
+      return {
+        color,
+        disabled: false,
+        className: `legend-color-${index}`
+      }
+    });
     coloring = zip(values, configs);
   } else {
     scheme = extendColorScheme(colorScheme, values.length);
+    const configs = scheme.map((color, index) => {
+      return {
+        color,
+        disabled: false,
+        className: `legend-color-${index}`
+      }
+    });
     coloring = zip(values, configs);
   }
   
-  const configs = scheme.map((color, index) => {
-    return {
-      color,
-      disabled: false,
-      className: `legend-color-${index}`
-    }
-  });
+  
   const colorMap = fromPairs(coloring);
 
   createStylesheet(coloring);
