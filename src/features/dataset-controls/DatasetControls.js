@@ -129,7 +129,6 @@ class DatasetControls extends React.Component {
 
     const showUrlEntry = dataset === CUSTOM_DATASET;
     const showUpload = dataset === UPLOAD_DATASET;
-    console.log(showUpload)
     this.setState({ 
       showUrlEntry: showUrlEntry,
       showUpload: showUpload,

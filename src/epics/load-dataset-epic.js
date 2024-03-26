@@ -20,7 +20,6 @@ const loadDatasetEpic = (action$, store) => {
     ,mergeMap(async ({ payload }) => {
       try{
         const formattedPayload = await formatPayload(payload, store);
-        console.log('process finished')
         return formattedPayload;
       } catch (error) {
         if (is(ValidationError, error)) {
@@ -111,7 +110,6 @@ const CSVconvert = (data) => {
 const formatPayload = async (data) => {
   const view = true;
   const currentTimestep = '0';
-  console.log(currentTimestep)
   const owner = data.owner;
   const initialName = data.name;
   const initialShortName = data.shortName;
