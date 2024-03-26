@@ -230,6 +230,7 @@ const updateView = createAction("UPDATE_VIEW");
 const reducer = handleActions(
   {
     [setData]: (state, { payload }) => {
+      console.log(payload)
       const data = payload.data;
       const newState = { ...state, data: { ...state.data } };
       Object.keys(data).forEach((key) => {
@@ -239,6 +240,7 @@ const reducer = handleActions(
       return newState
     },
     [setDatasets]: (state, { payload }) => {
+      console.log(payload)
       const datasets = payload.datasets;
       const newState = { ...state, datasets: { ...state.datasets } };
       Object.keys(datasets).forEach((key) => {

@@ -103,6 +103,7 @@ Here are some quick commands to get started:
 - If performing a standard visualization:
   - Open the data tab on the left hand and upload a dataset. Datasets will need to be created through the use of
   our parser [CRVIZ-parse.py](https://github.com/dzhang1789/CRviz-CASTLE/blob/master/scripts/CRviz-parse.py).
+
   - Open the grouping tab on the left hand side. Click the the dropdown menu next to **Color By** and click **Access**
   - Drag the slider **Subnet** into the **Group By** drop section.
 
@@ -122,4 +123,4 @@ Here are some quick commands to get started:
     - The action displayed will be corresponding to the agent of the current view.
   - After creating groupings through the **Subnet** we can zoom onto specific subnets. To do so, hover over the subnet
   and it should highlight. Click into it and the visual should zoom. To exit this, click on any surrounding gray area
-  outside the subnet grouping.
+
