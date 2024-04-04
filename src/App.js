@@ -290,9 +290,9 @@ class App extends Component {
   }
 
   render() {
+    const datasetList = this.props.datasets
     const { datasetCount, darkTheme, error, lastUpdated} = this.props;
     const hasDataset = datasetCount > 0;
-
     const uuids = this.state.uuids;
     const startUuid = this.state.startUuid;
     const endUuid = this.state.endUuid;
@@ -418,12 +418,22 @@ class App extends Component {
           </div>
         }
 
-        
-
-        <div className={ style.canvas }>
-          <Visualization startUid={startUuid} endUid={endUuid} resetNodeStyles={this.state.resetNodeStyles}/>
-        </div>
-        <div className={classNames({ [style.key]: true, [style.hidden]: datasetCount < 2 }) }>
+        <>
+          {Object.keys(datasetList).map((datasetId)=> (
+            <div className={ style.canvas } id="visualizationContainer">
+              <Visualization key={datasetId} id={`visualization-${datasetId}`} dataset={datasetList[datasetId].dataset} />
+            </div>
+            
+          ))}
+        </>
+          {/* <div>
+            <Visualization startUid={startUuid} endUid={endUuid} resetNodeStyles={this.state.resetNodeStyles}/>  
+          </div>
+          <div>
+            <Visualization startUid={startUuid} endUid={endUuid} resetNodeStyles={this.state.resetNodeStyles}/>
+          </div> */}
+          
+        {/* <div className={classNames({ [style.key]: true, [style.hidden]: datasetCount < 2 }) }>
           <svg width="100%" height="60">
             <g>
               <g className="viz-isAdded-fixed">
@@ -444,11 +454,11 @@ class App extends Component {
               <text x="215" y="15">Removed</text>
             </g>
           </svg>
-        </div>
-        <div className={ classNames({ [style.sliderContainer]: true, [style.hidden]: datasetCount < 2 }) } >
+        </div> */}
+        {/* <div className={ classNames({ [style.sliderContainer]: true, [style.hidden]: datasetCount < 2 }) } >
           <DatasetSlider points={uuids} startUuid={startUuid} endUuid={endUuid} 
             setStartUuid={this.setStartUuid} setEndUuid={this.setEndUuid} />
-        </div>
+        </div> */}
         <Modal isOpen={ error !== null } onRequestClose={this.onErrorClose} contentLabel="An Error has occurred">
             <div className={ style.modal }>
               <div className={ style.modalMain }>
@@ -591,8 +601,8 @@ const mapStateToProps = state => {
                 || [{ 'owner': uuidv4(), 'name': "Series 0", 'shortName': "s0" }];
   const datasetCount = uuids.length;
   const controls = selectControls(state);
-
   return {
+    datasets: datasets,
     datasetCount: datasetCount,
     darkTheme: controls.darkTheme,
     error: getError(state),

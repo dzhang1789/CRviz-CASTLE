@@ -230,23 +230,23 @@ const updateView = createAction("UPDATE_VIEW");
 const reducer = handleActions(
   {
     [setData]: (state, { payload }) => {
-      console.log(payload)
       const data = payload.data;
+      const owner = data['owner']
       const newState = { ...state, data: { ...state.data } };
-      Object.keys(data).forEach((key) => {
-        newState.data[key] = data[key];
-      })
-
+      newState.data[owner] = data
+      // Object.keys(data).forEach((key) => {
+      //   newState.data[key] = data[key];
+      //   console.log(newState.data)
+      // })
       return newState
     },
     [setDatasets]: (state, { payload }) => {
-      console.log(payload)
+      const data = payload.data
       const datasets = payload.datasets;
       const newState = { ...state, datasets: { ...state.datasets } };
       Object.keys(datasets).forEach((key) => {
         newState.datasets[key] = datasets[key];
       })
-      
       return newState;
     },
     [setCurrentTimestep]: (state, {payload}) => {
@@ -278,50 +278,59 @@ const reducer = handleActions(
     },
     [updateDataset]: (state, { payload }) => {
       const data = state.data;
-      const content = data.content;
-      const view = state.view;
-      // ignore changes if the timestep is invalid
-      if (payload == "" || payload < 0 || payload >= content.length) {
-        return state;
-      }
-      const newDataset = view ? content[payload].red : content[payload].true;
-      const actionReward = view ? content[payload].red_ar : content[payload].true_ar
-      const datasets = state.datasets
-      const source = state.source;
-      const name = state.name;
-      const shortName = state.shortName;
-      const initialConfig = state.configuration;
-      const keyFields = getKeyFields(state);
-      const ignoredFields = getIgnoredFields(state);
-      const updatedDataset = configureDataset(newDataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
-      const newState = { ...state, datasets: { ...state.datasets }}
-      Object.keys(datasets).forEach((key) => {
+      const newState = { ...state, datasets: { ...state.datasets },}
+      Object.keys(data).forEach((key) => {
+        const content = data[key].content;
+        const view = state.view;
+        // ignore changes if the timestep is invalid
+        if (payload == "" || payload < 0 || payload >= content.length) {
+          return state;
+        }
+        const newDataset = view ? content[payload].red : content[payload].true;
+        const actionReward = view ? content[payload].red_ar : content[payload].true_ar
+        const datasets = state.datasets[key]
+        const source = datasets.source;
+        const name = datasets.name;
+        const shortName = datasets.shortName;
+        const initialConfig = datasets.configuration;
+        const keyFields = getKeyFields(state);
+        const ignoredFields = getIgnoredFields(state);
+        const updatedDataset = configureDataset(newDataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
+        
         newState.datasets[key] = updatedDataset;
+        
+        displayActionReward(actionReward);
+        
       })
-      displayActionReward(actionReward);
       return newState
     },
+    
+
     [updateView]: (state, { payload }) => {
       const data = state.data;
-      const content = data.content;
       const view = payload;
-  
       const timestep = state.currentTimestep;
-      const newDataset = view ? content[timestep].red : content[timestep].true;
-      const actionReward = view ? content[timestep].red_ar : content[timestep].true_ar
-      const datasets = state.datasets
-      const source = state.source;
-      const name = state.name;
-      const shortName = state.shortName;
-      const initialConfig = state.configuration;
-      const keyFields = getKeyFields(state);
-      const ignoredFields = getIgnoredFields(state);
-      const updatedDataset = configureDataset(newDataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
-      const newState = { ...state, datasets: { ...state.datasets }}
-      Object.keys(datasets).forEach((key) => {
+  
+      const newState = { ...state, datasets: { ...state.datasets },}
+      Object.keys(data).forEach((key) => {
+        const content = data[key].content;        
+        const newDataset = view ? content[timestep].red : content[timestep].true;
+        console.log(content[timestep])
+        const actionReward = view ? content[timestep].red_ar : content[timestep].true_ar
+        const datasets = state.datasets[key]
+        const source = datasets.source;
+        const name = datasets.name;
+        const shortName = datasets.shortName;
+        const initialConfig = datasets.configuration;
+        const keyFields = getKeyFields(state);
+        const ignoredFields = getIgnoredFields(state);
+        const updatedDataset = configureDataset(newDataset, source, name, shortName, initialConfig, keyFields, ignoredFields);
+        
         newState.datasets[key] = updatedDataset;
+        
+        displayActionReward(actionReward);
+        
       })
-      displayActionReward(actionReward);
       return newState
     },
     [setFilteredDataset]: (state, { payload }) => {

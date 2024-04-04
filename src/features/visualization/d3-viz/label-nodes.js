@@ -17,7 +17,6 @@ export const getFontSize = (datum) => {
     // const fontMultiplier = 0.4;
     const label = getLabelText(datum)
     const labelLength = label ? label.length : 0;
-    console.log(labelLength)
     const fontMultiplier = 1/labelLength + 0.15
 
     const fontSize = datum.r * fontMultiplier;
